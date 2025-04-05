@@ -76,4 +76,4 @@ Repository pattern – доступ к данным
 Service layer – бизнес-логика
 DTO / Mapper – разделение слоев
 Factory pattern – создание сущностей
-Dependency Injection 
+Dependency Injection
