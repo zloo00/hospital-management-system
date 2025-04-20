@@ -2,11 +2,11 @@ package config
 
 import (
 	"fmt"
-	"log"
-	"os"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"hospital-app/internal/models"
+	"log"
+	"os"
 )
 
 type Config struct {
@@ -46,6 +46,13 @@ func InitDB(cfg *Config) (*gorm.DB, error) {
 		cfg.DBHost, cfg.DBUser, cfg.DBPassword, cfg.DBName, cfg.DBPort)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return nil, err
+	}
+
+	// ❗ ВАЖНО: вызываем миграции
+	err = db.AutoMigrate(&models.User{}, &models.Doctor{}, &models.Patient{}, &models.Appointment{})
+
 	if err != nil {
 		return nil, err
 	}
