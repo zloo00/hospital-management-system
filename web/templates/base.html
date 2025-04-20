@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital App - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="container">
+            <div class="logo">Hospital App</div>
+            <ul class="nav-links">
+                {% if current_user %}
+                <li><a href="/">Home</a></li>
+                {% if current_user.role == "admin" %}
+                <li><a href="/admin/patients">Patients</a></li>
+                <li><a href="/admin/doctors">Doctors</a></li>
+                <li><a href="/admin/departments">Departments</a></li>
+                <li><a href="/admin/appointments">Appointments</a></li>
+                {% elif current_user.role == "doctor" %}
+                <li><a href="/doctor/appointments">My Appointments</a></li>
+                <li><a href="/doctor/patients">Patients</a></li>
+                {% elif current_user.role == "patient" %}
+                <li><a href="/patient/appointments">My Appointments</a></li>
+                <li><a href="/patient/doctors">Doctors</a></li>
+                {% endif %}
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2023 Hospital App. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>
